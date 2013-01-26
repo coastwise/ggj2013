@@ -1,0 +1,28 @@
+Library class:
+BLLib
+
+Trees:
+	Trees_WBC
+	Unknown
+
+Contexts:
+	Unknown
+
+Branch priority groups:
+	Unknown
+
+Actions (8: 1 - 9):
+	Idle (1)
+	FreeTargets (2)
+	SetClosest (3)
+	IsGrabOutOfRange (4)
+	Seek (5)
+	Grab (6)
+	IsAttached (7)
+	DamageOverTime (8)
+	Unknown (9)
+
+Decorators (0: 10 - 10):
+	Unknown (10)
+
+Agent classes:
