@@ -60,7 +60,6 @@ public class RBCAIScript : MonoBehaviour, IAgent {
 	public BehaveResult TickKillAction (Tree sender)
 	{
 		return BehaveResult.Running;
-		// wait for death
 	}
 	
 	public BehaveResult TickIsInfectedAction (Tree sender)

@@ -3,14 +3,14 @@ using System.Collections;
 using Behave.Runtime;
 using Tree = Behave.Runtime.Tree;
 
-public class WBCAIScript : MonoBehaviour, IAgent {
+public class VirusAIScript : MonoBehaviour, IAgent {
 	
-	private WBCScript wbc;
+	private VirusScript virus;
 	private Tree tree;
 
 	IEnumerator Start ()
 	{
-		wbc = (WBCScript)GetComponent<WBCScript>();
+		virus = (VirusScript)GetComponent<VirusScript>();
 		tree = BLLib.InstantiateTree(BLLib.TreeType.Trees_WBC, this);
 
 		while (Application.isPlaying && tree != null)
@@ -44,14 +44,14 @@ public class WBCAIScript : MonoBehaviour, IAgent {
 	//IDLE
 	public BehaveResult TickSetStateIdleAction (Tree sender)
 	{
-		wbc.SetState(new WBCStateIdle(wbc));
+		virus.SetState(new VirusStateIdle(virus));
 
 		return BehaveResult.Success;
 	}
 
 	public BehaveResult TickIdleAction (Tree sender)
 	{
-		if (wbc.DetectsFreeTargets())
+		if (virus.DetectsFreeTargets())
 		{
 			return BehaveResult.Success;
 		}
@@ -63,14 +63,14 @@ public class WBCAIScript : MonoBehaviour, IAgent {
 	//ACTION PRECHECK
 	public BehaveResult TickSetClosestAction (Tree sender)
 	{
-		wbc.SetClosestTarget();
+		virus.SetClosestTarget();
 
 		return BehaveResult.Success;
 	}
 
 	public BehaveResult TickFreeTargetsAction (Tree sender)
 	{
-		if (wbc.DetectsFreeTargets())
+		if (virus.DetectsFreeTargets())
 		{
 			return BehaveResult.Success;
 		}
@@ -83,7 +83,7 @@ public class WBCAIScript : MonoBehaviour, IAgent {
 	//SEEK
 	public BehaveResult TickIsGrabOutOfRangeAction (Tree sender)
 	{
-		if (wbc.IsGrabOutOfRange())
+		if (virus.IsGrabOutOfRange())
 		{
 			return BehaveResult.Success;
 		}
@@ -92,19 +92,19 @@ public class WBCAIScript : MonoBehaviour, IAgent {
 
 	public BehaveResult TickSetStateSeekAction (Tree sender)
 	{
-		wbc.SetState(new WBCStateSeek(wbc));
+		virus.SetState(new VirusStateSeek(virus));
 
 		return BehaveResult.Success;
 	}
 
 	public BehaveResult TickSeekAction (Tree sender)
 	{
-		if (!wbc.IsGrabOutOfRange())
+		if (!virus.IsGrabOutOfRange())
 		{
 			return BehaveResult.Failure;
 		}
 		
-		if (wbc.IsAttachedTargetDead())
+		if (virus.IsAttachedTargetInfected())
 		{
 			return BehaveResult.Success;	
 		}
@@ -115,7 +115,7 @@ public class WBCAIScript : MonoBehaviour, IAgent {
 	//DAMAGE
 	public BehaveResult TickIsAttachedAction (Tree sender)
 	{
-		if (wbc.IsAttached())
+		if (virus.IsAttached())
 		{
 			return BehaveResult.Success;	
 		}
@@ -125,14 +125,14 @@ public class WBCAIScript : MonoBehaviour, IAgent {
 	
 	public BehaveResult TickSetStateDamageAction (Tree sender)
 	{
-		wbc.SetState(new WBCStateDamage(wbc));
+		virus.SetState(new VirusStateDamage(virus));
 
 		return BehaveResult.Success;
 	}
 
 	public BehaveResult TickDamageOverTimeAction (Tree sender)
 	{
-		if (wbc.IsAttachedTargetDead())
+		if (virus.IsAttachedTargetDead())
 		{
 			return BehaveResult.Failure;
 		}

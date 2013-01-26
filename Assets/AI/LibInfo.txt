@@ -13,7 +13,7 @@ Contexts:
 Branch priority groups:
 	Unknown
 
-Actions (22: 1 - 23):
+Actions (23: 1 - 24):
 	Idle (1)
 	FreeTargets (2)
 	DamageOverTime (3)
@@ -23,22 +23,23 @@ Actions (22: 1 - 23):
 	SetStateSeek (7)
 	SetStateDamage (8)
 	SetStateIdle (9)
-	FindClosestTarget (10)
-	Infect (11)
-	IsInfected (12)
-	IsThreatDetected (13)
-	SetStateFlee (14)
-	Flee (15)
-	SetStateInfected (16)
-	Infected (17)
-	SetStateExplode (18)
-	Explode (19)
-	IsKilled (20)
-	SetStateKill (21)
-	Kill (22)
-	Unknown (23)
-
-Decorators (0: 24 - 24):
+	IsAttached (10)
+	FindClosestTarget (11)
+	Infect (12)
+	IsInfected (13)
+	IsThreatDetected (14)
+	SetStateFlee (15)
+	Flee (16)
+	SetStateInfected (17)
+	Infected (18)
+	SetStateExplode (19)
+	Explode (20)
+	IsKilled (21)
+	SetStateKill (22)
+	Kill (23)
 	Unknown (24)
+
+Decorators (0: 25 - 25):
+	Unknown (25)
 
 Agent classes:

@@ -18,8 +18,8 @@ public class RBCScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		mIsInfected = true;
-		mInfectionTime = 10f;
+		mIsInfected = false;
+		mInfectionTime = 1000f;
 		mExplosionDuration = 3f;
 		mShouldExplode = false;
 		mMaxAntibody = 2;
@@ -32,45 +32,39 @@ public class RBCScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (mHealth);
 		state.Execute();
 	}
 	
-	public void IdleInit ()
+	public bool IsKilled ()
 	{
-		// no-op
-	}
-	
-	public void Idle ()
-	{
-		// no-op	
-	}
-	
-	public void SetThreatDetected (bool val)
-	{
-		mIsThreatDetected = val;	
-	}
-	
-	public bool IsThreatDetected ()
-	{
-		return mIsThreatDetected;	
-	}
-	
-	public void FleeInit ()
-	{
-			
-	}
-	
-	public void Flee ()
-	{
-		// find nearest threat
-		
-		// run away from nearest threat
+		return mIsKilled;	
 	}
 	
 	public void SetState (RBCState state)
 	{
 		this.state = state;
+	}
+	
+	public void KillInit ()
+	{
+		StartCoroutine("KillDeleteCoroutine");	
+	}
+	
+	private IEnumerator KillDeleteCoroutine ()
+	{
+		yield return new WaitForSeconds (2.0f);
+		Destroy(gameObject);	
+	}
+	
+	public void Kill ()
+	{
+		//no-op
+		//increment score?
+	}
+	
+	public bool IsInfected ()
+	{
+		return mIsInfected;	
 	}
 	
 	public void InfectedInit ()
@@ -80,19 +74,24 @@ public class RBCScript : MonoBehaviour {
 	
 	private IEnumerator InfectionTimer ()
 	{
+		GameObject go = (GameObject)Instantiate(Resources.Load("DetectionSphere"));
+		
+		go.transform.parent = transform;
+		go.transform.localPosition = new Vector3(0, 0, 0);
 		yield return new WaitForSeconds(mInfectionTime);
 		mShouldExplode = true;
-	}
-	
-	public bool IsInfected ()
-	{
-		return mIsInfected;	
 	}
 	
 	public void Infected ()
 	{
 		// Seek to player
 	}
+	
+	public void SetInfected ()
+	{
+		mIsInfected = true;
+	}
+	
 	
 	public bool CheckShouldExplode ()
 	{
@@ -124,26 +123,38 @@ public class RBCScript : MonoBehaviour {
 		// increase sphere collider size over time
 	}
 	
-	public bool IsKilled ()
+	
+	public bool IsThreatDetected ()
 	{
-		return mIsKilled;	
+		return mIsThreatDetected;	
 	}
 	
-	public void KillInit ()
+	
+	public void SetThreatDetected (bool val)
 	{
-		StartCoroutine("KillDeleteCoroutine");	
+		mIsThreatDetected = val;	
 	}
 	
-	private IEnumerator KillDeleteCoroutine ()
+	public void FleeInit ()
 	{
-		yield return new WaitForSeconds (2.0f);
-		Destroy(gameObject);
+			
 	}
 	
-	public void Kill ()
+	public void Flee ()
 	{
-		//no-op
-		//increment score?
+		// find nearest threat
+		
+		// run away from nearest threat
+	}
+	
+	public void IdleInit ()
+	{
+		// no-op
+	}
+	
+	public void Idle ()
+	{
+		// no-op	
 	}
 	
 	public void ApplyDamage (float damage)

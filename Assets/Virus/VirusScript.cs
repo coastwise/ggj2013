@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class WBCScript : MonoBehaviour {
+public class VirusScript : MonoBehaviour {
 	
-	private WBCState state;
+	private VirusState state;
 	public List<RBCScript> RBCList = new List<RBCScript>();
 	private RBCScript target = null;
 	private float grabRange = 1f;
@@ -12,18 +12,18 @@ public class WBCScript : MonoBehaviour {
 	private bool mIsGrabOutOfRange = true;
 	private bool mAttached = false;
 	private int mAntibodies = 0;
-	private Vector3 randomIdlePoint = new Vector3(0, 0, 0);
+	
 	void Start () {
 		Init();
 	}
 	
 	public void Init () {
-		state = new WBCStateIdle(this);
+		state = new VirusStateIdle(this);
 		
-		WBCAIScript ai = (WBCAIScript)gameObject.AddComponent("WBCAIScript");
+		VirusAIScript ai = (VirusAIScript)gameObject.AddComponent("VirusAIScript");
 	}
 
-	public void SetState (WBCState state)
+	public void SetState (VirusState state)
 	{
 		this.state = state;	
 	}
@@ -32,53 +32,33 @@ public class WBCScript : MonoBehaviour {
 	void Update () {
 		state.Execute();
 	}
-	 
-	
-	public void IdleInit ()
-	{
-		StartCoroutine ("IdleRandomPositionCoroutine");	
-	}
-	
-	private IEnumerator IdleRandomPositionCoroutine ()
-	{
-		randomIdlePoint = transform.position;
-		
-		randomIdlePoint.x += Random.Range(-5, 5);
-		randomIdlePoint.y += Random.Range(-5, 5);
-		randomIdlePoint.z += Random.Range(-5, 5);
-		
-		yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
-		
-		StartCoroutine ("IdleRandomPositionCoroutine");
-	}
-	
-	public void Idle ()
-	{
-		Vector3 dir = randomIdlePoint - transform.position;
-		dir.Normalize();
-		
-		dir *= moveVel *0.5f;
-		
-		transform.Translate(dir * Time.deltaTime);
-	}
-	
+	 	
 	public void SetClosestTarget ()
 	{	
+		GameObject[] gos = GameObject.FindGameObjectsWithTag("RBC");
+		RBCList.Clear();
+		foreach (GameObject go in gos)
+		{
+			RBCScript rbc = go.GetComponent<RBCScript>();
+			if (rbc.IsKilled() || rbc.IsInfected())
+				continue;
+		
+			RBCList.Add(rbc);	
+		}
+		
 		RBCScript closestRBC = null;
 		
 		foreach (RBCScript rbc in RBCList)
 		{
-			if (rbc.IsInfected())
-			{
-				if (closestRBC == null) {
-					closestRBC = rbc;
-					continue;
-				}
-				if (Vector3.Distance(closestRBC.transform.position, transform.position) > Vector3.Distance(rbc.transform.position, transform.position))
-				{
-					closestRBC = rbc;
-				}
+			if (closestRBC == null) {
+				closestRBC = rbc;
+				continue;
 			}
+			if (Vector3.Distance(closestRBC.transform.position, transform.position) > Vector3.Distance(rbc.transform.position, transform.position))
+			{
+				closestRBC = rbc;
+			}
+			
 		}
 		
 		if (closestRBC != null)
@@ -91,7 +71,9 @@ public class WBCScript : MonoBehaviour {
 	
 	public bool DetectsFreeTargets ()
 	{
-		return RBCList.Count > 0;
+		GameObject[] gos = GameObject.FindGameObjectsWithTag("RBC");
+		
+		return gos.Length > 0;
 	}
 	
 	public bool IsGrabOutOfRange ()
@@ -106,6 +88,14 @@ public class WBCScript : MonoBehaviour {
 		
 		return target.IsKilled();	
 	}
+	
+	public bool IsAttachedTargetInfected ()
+	{
+		if (target == null)
+			return true;
+		
+		return target.IsInfected();	
+	}
 
 
 	public void SeekInit ()
@@ -117,6 +107,10 @@ public class WBCScript : MonoBehaviour {
 	{
 		if (mIsGrabOutOfRange && target != null)
 		{
+			if (target.IsInfected())
+			{
+				return;	
+			}
 			Vector3 wbcPos = transform.position;
 			
 			Vector3 targetPos = target.transform.position;
@@ -130,20 +124,11 @@ public class WBCScript : MonoBehaviour {
 	
 	public void DamageOverTime ()
 	{
-		target.ApplyDamage(100 * Time.deltaTime);
-		
-		
-		if (IsAttachedTargetDead())
-		{
-			Detach();	
-		}
-		
-		RBCList.Remove(target);
+		target.SetInfected();
 	}
 	
 	public void OnTriggerEnter (Collider other)
 	{
-		
 		if (other.tag == "RBC")
 		{
 			Debug.Log("Houston we are on the moon");
@@ -156,11 +141,6 @@ public class WBCScript : MonoBehaviour {
 				transform.parent = other.transform;
 				mAttached = true;
 			}
-		} else if (other.tag == "RBCDetectionSphere")
-		{
-			RBCDetectionSphere rbcDetSph = other.GetComponent<RBCDetectionSphere>();
-			RBCScript rbc = rbcDetSph.GetRBC();
-			RBCList.Add(rbc);
 		}
 	}
 	
@@ -168,14 +148,7 @@ public class WBCScript : MonoBehaviour {
 	{
 		return mAttached;	
 	}
-	
-	public void Detach ()
-	{
-		mAttached = false;
-		mIsGrabOutOfRange = true;
-		transform.parent = null;
-	}
-	
+
 	public int GetAntibodyCount() {
 		return mAntibodies;	
 	}
