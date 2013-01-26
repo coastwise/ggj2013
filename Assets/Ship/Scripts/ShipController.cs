@@ -64,7 +64,7 @@ public class ShipController : MonoBehaviour {
 			ship.h = ship.h*ship.smoothing + Input.GetAxis("Horizontal")*(1-ship.smoothing);
 			ship.v = ship.v*ship.smoothing + Input.GetAxis("Vertical")*(1-ship.smoothing);
 			
-			ship.transform.rotation = Quaternion.AngleAxis(ship.h*ship.maxHorizontalAngle, Vector3.up) * Quaternion.AngleAxis(ship.v*ship.maxVerticalAngle, Vector3.right);
+			ship.transform.localRotation = Quaternion.AngleAxis(ship.h*ship.maxHorizontalAngle, Vector3.up) * Quaternion.AngleAxis(ship.v*ship.maxVerticalAngle, Vector3.right);
 			
 			ship.transform.parent.Translate(ship.h*ship.horizontalSpeed, -ship.v*ship.verticalSpeed, 0);
 		}
