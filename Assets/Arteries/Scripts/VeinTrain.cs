@@ -20,10 +20,13 @@ public class VeinTrain : MonoBehaviour {
 		if (artery == null) {
 			Debug.Log("TODO: put the veintrain colliders and stuff in layers... its still hitting other stuff!");
 			return;
+		} else {
+			Debug.Log("Vein Train moving to " + artery.name);
 		}
 		
 		path = artery.path.nodes.ToArray();
 		pathLength = Vector3.Distance(path[0], path[path.Length-1]); // estimate (no curve)
+		pathProgress = 0;
 	}
 	
 	void Update () {

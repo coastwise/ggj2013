@@ -22,6 +22,12 @@ public class ArteryGenerator : MonoBehaviour {
 	void Start () {
 		name = "Artery " + arteryCount;
 		arteryCount = arteryCount + 1;
+		
+		// fix for stupid iTweenPath not using local coordinates
+		// the idea of moving the whole path never crossed anyone's mind?? jeez
+		for (int i = 0; i < path.nodes.Count; i++) {
+			path.nodes[i] = gameObject.transform.TransformPoint(path.nodes[i]);
+		}
 	}
 	
 	void OnTriggerEnter (Collider other) {
