@@ -3,6 +3,8 @@ BLLib
 
 Trees:
 	Trees_WBC
+	Trees_Virus
+	Trees_RBC
 	Unknown
 
 Contexts:
@@ -11,18 +13,32 @@ Contexts:
 Branch priority groups:
 	Unknown
 
-Actions (8: 1 - 9):
+Actions (22: 1 - 23):
 	Idle (1)
 	FreeTargets (2)
 	DamageOverTime (3)
-	IsAttached (4)
-	Grab (5)
-	Seek (6)
-	IsGrabOutOfRange (7)
-	SetClosest (8)
-	Unknown (9)
+	Seek (4)
+	IsGrabOutOfRange (5)
+	SetClosest (6)
+	SetStateSeek (7)
+	SetStateDamage (8)
+	SetStateIdle (9)
+	FindClosestTarget (10)
+	Infect (11)
+	IsInfected (12)
+	IsThreatDetected (13)
+	SetStateFlee (14)
+	Flee (15)
+	SetStateInfected (16)
+	Infected (17)
+	SetStateExplode (18)
+	Explode (19)
+	IsKilled (20)
+	SetStateKill (21)
+	Kill (22)
+	Unknown (23)
 
-Decorators (0: 10 - 10):
-	Unknown (10)
+Decorators (0: 24 - 24):
+	Unknown (24)
 
 Agent classes:

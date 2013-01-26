@@ -3,12 +3,13 @@ using System.Collections;
 
 public class WBCStateSeek : WBCState {
 	
-	public WBCStateSeek (WBCScript ai)
-		: base (ai) {
+	public WBCStateSeek (WBCScript wbc)
+		: base (wbc) {
+		wbc.SeekInit();
 	}
 	
 	public override void Execute ()
 	{
-		
+		wbc.Seek();
 	}
 }

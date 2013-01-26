@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class WBCStateGrab : WBCState {
+public class WBCStateDead : WBCState {
 	
-	public WBCStateGrab (WBCScript ai)
-		: base (ai) {
+	public WBCStateDead (WBCScript wbc)
+		: base (wbc) {
 	}
 	
 	public override void Execute ()

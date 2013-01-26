@@ -3,11 +3,11 @@ using System.Collections;
 
 public abstract class WBCState {
 	
-	protected WBCScript ai;
+	protected WBCScript wbc;
 	
 	// Use this for initialization
-	public WBCState (WBCScript ai) {
-		this.ai = ai;
+	public WBCState (WBCScript wbc) {
+		this.wbc = wbc;
 	}
 	
 	public abstract void Execute ();
