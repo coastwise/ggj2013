@@ -1,15 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class WBCStateDamage : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+public class WBCStateDamage : WBCState {
 	
+	public WBCStateDamage (WBCScript ai)
+		: base (ai) {
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public override void Execute ()
+	{
+		
 	}
 }

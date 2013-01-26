@@ -1,15 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class WBCStateIdle : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+public class WBCStateIdle : WBCState {
 	
+	public WBCStateIdle (WBCScript ai)
+		: base (ai) {
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public override void Execute ()
+	{
+		
 	}
 }

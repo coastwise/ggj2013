@@ -1,15 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class WBCStateGrab : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+public class WBCStateGrab : WBCState {
 	
+	public WBCStateGrab (WBCScript ai)
+		: base (ai) {
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public override void Execute ()
+	{
+		
 	}
 }
