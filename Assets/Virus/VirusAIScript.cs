@@ -126,17 +126,12 @@ public class VirusAIScript : MonoBehaviour, IAgent {
 	public BehaveResult TickSetStateDamageAction (Tree sender)
 	{
 		virus.SetState(new VirusStateDamage(virus));
-
+		virus.DamageOverTime();
 		return BehaveResult.Success;
 	}
 
 	public BehaveResult TickDamageOverTimeAction (Tree sender)
 	{
-		if (virus.IsAttachedTargetDead())
-		{
-			return BehaveResult.Failure;
-		}
-
 		return BehaveResult.Running;
 	}
 }

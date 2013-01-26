@@ -21,6 +21,7 @@ public class WBCScript : MonoBehaviour {
 		state = new WBCStateIdle(this);
 		
 		WBCAIScript ai = (WBCAIScript)gameObject.AddComponent("WBCAIScript");
+		gameObject.AddComponent("Rotation");
 	}
 
 	public void SetState (WBCState state)
@@ -124,7 +125,8 @@ public class WBCScript : MonoBehaviour {
 			Vector3 dir = targetPos - wbcPos;
 			dir.Normalize();
 			
-			transform.Translate(dir * moveVel * Time.deltaTime);
+			
+			transform.Translate(dir * moveVel * Time.deltaTime, Space.World);
 		}
 	}
 	

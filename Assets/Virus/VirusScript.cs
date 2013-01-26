@@ -8,7 +8,7 @@ public class VirusScript : MonoBehaviour {
 	public List<RBCScript> RBCList = new List<RBCScript>();
 	private RBCScript target = null;
 	private float grabRange = 1f;
-	private float moveVel = 2f;
+	private float moveVel = 1f;
 	private bool mIsGrabOutOfRange = true;
 	private bool mAttached = false;
 	private int mAntibodies = 0;

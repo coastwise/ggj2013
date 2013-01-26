@@ -28,6 +28,7 @@ public class RBCScript : MonoBehaviour {
 		state = new RBCStateIdle(this);
 		
 		RBCAIScript ai = (RBCAIScript)gameObject.AddComponent("RBCAIScript");
+		gameObject.AddComponent("Rotation");
 	}
 	
 	// Update is called once per frame
