@@ -14,12 +14,12 @@ Branch priority groups:
 Actions (8: 1 - 9):
 	Idle (1)
 	FreeTargets (2)
-	SetClosest (3)
-	IsGrabOutOfRange (4)
-	Seek (5)
-	Grab (6)
-	IsAttached (7)
-	DamageOverTime (8)
+	DamageOverTime (3)
+	IsAttached (4)
+	Grab (5)
+	Seek (6)
+	IsGrabOutOfRange (7)
+	SetClosest (8)
 	Unknown (9)
 
 Decorators (0: 10 - 10):
