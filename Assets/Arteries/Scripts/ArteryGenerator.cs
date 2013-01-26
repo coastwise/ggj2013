@@ -30,9 +30,7 @@ public class ArteryGenerator : MonoBehaviour {
 		}
 	}
 	
-	void OnTriggerEnter (Collider other) {
-		if (other.tag != "Player") return;
-		
+	public void GenerateBranches () {
 		Debug.Log(name + " generating branches...");
 		foreach (Transform branchRoot in branchRoots) {
 			Object randomPrefab = prefabs[Random.Range(0, prefabs.Length)];

@@ -12,6 +12,13 @@ public class VeinTrain : MonoBehaviour {
 	
 	public Vector3[] path;
 	public float pathLength;
+	
+	public ArteryGenerator nextArtery;
+	
+	public void Start () {
+		pathLength = 1;
+		nextArtery.GenerateBranches();
+	}
 
 	void OnTriggerEnter (Collider other) {
 		
@@ -20,17 +27,26 @@ public class VeinTrain : MonoBehaviour {
 		if (artery == null) {
 			Debug.Log("TODO: put the veintrain colliders and stuff in layers... its still hitting other stuff!");
 			return;
-		} else {
-			Debug.Log("Vein Train moving to " + artery.name);
+		} else if (artery != nextArtery) { // we only want to do this once... sometimes it triggers more often
+			// we don't want to null this out by accident...
+			// so can't assign straight from GetComponent
+			nextArtery = artery;
+			nextArtery.GenerateBranches();
 		}
-		
-		path = artery.path.nodes.ToArray();
-		pathLength = Vector3.Distance(path[0], path[path.Length-1]); // estimate (no curve)
-		pathProgress = 0;
 	}
 	
 	void Update () {
 		animation["Pulse"].speed = bpm / 60;
+		
+		if (pathProgress >= 1) {
+			Debug.Log("Vein Train moving to path: " + nextArtery.name);
+			
+			// we've finally reached the end of the iTweenPath, so we can move to the next one
+			path = nextArtery.path.nodes.ToArray();
+			pathLength = Vector3.Distance(path[0], path[path.Length-1]); // estimate (no curve)
+			pathProgress -= 1f; // if we went over by a bit, we don't want to skip backwards
+			nextArtery = null; // null this out just in case
+		}
 		
 		if (path == null || path.Length < 2) return;
 		
