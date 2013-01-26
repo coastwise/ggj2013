@@ -7,11 +7,17 @@ public class ArteryGenerator : MonoBehaviour {
 	
 	private static int arteryCount = 0;
 	
-	private static Object[] prefabs = Resources.LoadAll("ArteryPrefabs", typeof(GameObject));
+	private static Object[] prefabs;
 	
 	public List<Transform> branchRoots;
 	
 	public iTweenPath path;
+	
+	void Awake () {
+		if (prefabs == null) {
+			prefabs = Resources.LoadAll("ArteryPrefabs", typeof(GameObject));
+		}
+	}
 	
 	void Start () {
 		name = "Artery " + arteryCount;
