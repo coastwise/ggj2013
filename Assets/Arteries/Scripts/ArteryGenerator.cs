@@ -22,7 +22,7 @@ public class ArteryGenerator : MonoBehaviour {
 		Debug.Log(name + " generating branches...");
 		foreach (Transform branchRoot in branchRoots) {
 			Object randomPrefab = prefabs[Random.Range(0, prefabs.Length)];
-			GameObject branch = Instantiate(randomPrefab, branchRoot.position, Quaternion.identity) as GameObject;
+			GameObject branch = Instantiate(randomPrefab, branchRoot.position, branchRoot.rotation) as GameObject;
 		}	
 	}
 	

@@ -1,15 +1,25 @@
 fileFormatVersion: 2
-guid: 17e90f1c9df094d8d9ed9016eda52892
+guid: 5c6cfa9c8734c414a9cdd05c3ab91355
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: tubePolyExport
-    400000: //RootNode
-    400002: tubePolyExport
-    2300000: tubePolyExport
-    3300000: tubePolyExport
-    4300000: tubePolyExport
+    100000: tubeRight1
+    100002: //RootNode
+    100004: tubeStraight1
+    100006: tubeStraight2
+    400000: tubeRight1
+    400002: //RootNode
+    400004: tubeStraight1
+    400006: tubeStraight2
+    2300000: tubeRight1
+    2300002: tubeStraight1
+    2300004: tubeStraight2
+    3300000: tubeRight1
+    3300002: tubeStraight1
+    3300004: tubeStraight2
+    4300000: tubeRight1
+    4300002: tubeStraight1
+    4300004: tubeStraight2
     9500000: //RootNode
   materials:
     importMaterials: 1
