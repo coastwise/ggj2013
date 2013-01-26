@@ -134,7 +134,7 @@ public class VirusScript : MonoBehaviour {
 			Debug.Log("Houston we are on the moon");
 			RBCScript rbc = other.GetComponent<RBCScript>();
 			
-			if (target.Equals(rbc))
+			if (target == rbc)
 			{
 				mIsGrabOutOfRange = false;
 				

@@ -151,7 +151,7 @@ public class WBCScript : MonoBehaviour {
 			Debug.Log("Houston we are on the moon");
 			RBCScript rbc = other.GetComponent<RBCScript>();
 			
-			if (target.Equals(rbc))
+			if (target == rbc)
 			{
 				mIsGrabOutOfRange = false;
 				
@@ -175,7 +175,7 @@ public class WBCScript : MonoBehaviour {
 	{
 		mAttached = false;
 		mIsGrabOutOfRange = true;
-		transform.parent = null;
+		transform.parent = target.transform.parent;
 	}
 	
 	public int GetAntibodyCount() {
