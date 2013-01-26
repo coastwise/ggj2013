@@ -11,6 +11,8 @@ public class ArteryGenerator : MonoBehaviour {
 	
 	public List<Transform> branchRoots;
 	
+	public iTweenPath path;
+	
 	void Start () {
 		name = "Artery " + arteryCount;
 		arteryCount = arteryCount + 1;
