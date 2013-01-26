@@ -14,7 +14,11 @@ public class iTweenPath : MonoBehaviour
 	public string initialName = "";
 	
 	void OnEnable(){
-		paths.Add(pathName.ToLower(), this);
+		// Change to allow for new path instances to have the same name as old ones
+		// new code does not throw exception when replacing the value for the key
+		// http://answers.unity3d.com/questions/49137
+		//paths.Add(pathName.ToLower(), this);
+		paths[pathName.ToLower()] = this;
 	}
 	
 	void OnDrawGizmosSelected(){
