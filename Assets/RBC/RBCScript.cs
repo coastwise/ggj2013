@@ -19,7 +19,7 @@ public class RBCScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mIsInfected = false;
-		mInfectionTime = 1000f;
+		mInfectionTime = 10f;
 		mExplosionDuration = 3f;
 		mShouldExplode = false;
 		mMaxAntibody = 2;
