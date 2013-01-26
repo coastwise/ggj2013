@@ -32,8 +32,12 @@ public class VeinTrain : MonoBehaviour {
 		
 		pathProgress += deltaZ/500;
 		
-		//Vector3 pointOnPath = iTween.PointOnPath(path, pathProgress);
-		iTween.PutOnPath(gameObject, path, pathProgress);
+		Vector3 pointOnPath = iTween.PointOnPath(path, pathProgress);
+		Vector3 lookTarget = iTween.PointOnPath(path, pathProgress + 0.01f);
+		iTween.MoveUpdate(gameObject, 
+		                  iTween.Hash("position", pointOnPath,
+		                              "looktarget", lookTarget,
+		                              "time", 0));
 	}
 	
 }
