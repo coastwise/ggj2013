@@ -18,9 +18,8 @@ public class VirusScript : MonoBehaviour {
 	}
 	
 	public void Init () {
-		state = new VirusStateIdle(this);
+		state = new VirusStateBirth(this, new Vector3(0,0,0));
 		
-		VirusAIScript ai = (VirusAIScript)gameObject.AddComponent("VirusAIScript");
 	}
 
 	public void SetState (VirusState state)
@@ -118,7 +117,7 @@ public class VirusScript : MonoBehaviour {
 			Vector3 dir = targetPos - wbcPos;
 			dir.Normalize();
 			
-			transform.Translate(dir * moveVel * Time.deltaTime);
+			transform.Translate(dir * moveVel * Time.deltaTime, Space.World);
 		}
 	}
 	
@@ -147,6 +146,15 @@ public class VirusScript : MonoBehaviour {
 	public bool IsAttached ()
 	{
 		return mAttached;	
+	}
+	
+	public void IncrementAB ()
+	{
+		mAntibodies++;
+		if (mAntibodies > 2)
+		{
+			Destroy(gameObject);	
+		}
 	}
 
 	public int GetAntibodyCount() {
