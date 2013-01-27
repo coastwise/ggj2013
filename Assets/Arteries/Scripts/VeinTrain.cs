@@ -38,7 +38,7 @@ public class VeinTrain : MonoBehaviour {
 		ArteryGenerator artery = other.gameObject.GetComponent<ArteryGenerator>();
 		
 		if (artery == null) {
-			Debug.Log("TODO: put the veintrain colliders and stuff in layers... its still hitting other stuff!");
+			//Debug.Log("TODO: put the veintrain colliders and stuff in layers... its still hitting other stuff!");
 			return;
 		} else if (artery != nextArtery) { // we only want to do this once... sometimes it triggers more often
 			// we don't want to null this out by accident...

@@ -94,7 +94,7 @@ public class ShipController : MonoBehaviour {
 			
 			// this is (moderately) expensive, prolly shouldn't do it every frame!!! :/
 			VirusScript[] viruses = ship.parentTrain.GetComponentsInChildren<VirusScript>();
-			Debug.Log("Virus count: " + viruses.Length);
+			
 			if (viruses.Length == 0) {
 				Debug.Log("All viruses killed!!!!");
 				ship.EnterState(typeof(TrainTransition));
