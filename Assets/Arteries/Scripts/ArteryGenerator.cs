@@ -13,6 +13,8 @@ public class ArteryGenerator : MonoBehaviour {
 	
 	public iTweenPath path;
 	
+	public ArteryGenerator prevArtery;
+	
 	void Awake () {
 		if (prefabs == null) {
 			prefabs = Resources.LoadAll("ArteryPrefabs", typeof(GameObject));
@@ -35,7 +37,14 @@ public class ArteryGenerator : MonoBehaviour {
 		foreach (Transform branchRoot in branchRoots) {
 			Object randomPrefab = prefabs[Random.Range(0, prefabs.Length)];
 			GameObject branch = Instantiate(randomPrefab, branchRoot.position, branchRoot.rotation) as GameObject;
-		}	
+			ArteryGenerator artery = branch.GetComponentInChildren<ArteryGenerator>();
+			artery.prevArtery = this;
+		}
+		
+		if (prevArtery != null) {
+			// wait a few secs then destroy old artery
+			Destroy(prevArtery.transform.parent.gameObject, 10);
+		}
 	}
 	
 }
