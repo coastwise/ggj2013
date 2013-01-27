@@ -159,16 +159,27 @@ public class ShipController : MonoBehaviour {
 	protected class TrainTransition : State {
 		public TrainTransition (ShipController c) : base (c) {}
 		override public void OnEnter () {
-			Debug.Log("Ship controller train transition; parent: " + ship.transform.parent.name + ", grandparent: " + ship.transform.parent.parent.name);
-			Debug.Log("ship controller next train pregen: " + ship.parentTrain.nextTrain.name);
-			ship.parentTrain.nextTrain.GenerateNextTrain();
-			Debug.Log("ship controller next train postgen: " + ship.parentTrain.nextTrain.name);
-			ship.transform.parent.position = ship.parentTrain.nextTrain.transform.position;
-			ship.transform.parent.rotation = ship.parentTrain.nextTrain.transform.rotation;
-			ship.transform.parent.parent = ship.parentTrain.nextTrain.transform;
 			ship.parentTrain = ship.parentTrain.nextTrain;
-			//ship.transform.parent.localRotation = Quaternion.identity;
-			ship.EnterState(typeof(FlyingState));
+			ship.parentTrain.GenerateNextTrain();
+			ship.transform.parent.parent = null;
+		}
+		
+		override public void Update () {
+			Vector3 dist = ship.transform.parent.position - ship.parentTrain.transform.position;
+			if (dist.magnitude < 0.5) {
+				iTween.Stop(ship.transform.parent.gameObject);
+				ship.EnterState(typeof(FlyingState));
+			} else {
+				iTween.MoveUpdate(ship.transform.parent.gameObject,
+				                  iTween.Hash("position", ship.parentTrain.transform,
+				                              "looktarget", ship.parentTrain.transform));
+			}
+		}
+		
+		override public void OnExit () {
+			ship.transform.parent.position = ship.parentTrain.transform.position;
+			ship.transform.parent.rotation = ship.parentTrain.transform.rotation;
+			ship.transform.parent.parent = ship.parentTrain.transform;
 		}
 	}
 	
