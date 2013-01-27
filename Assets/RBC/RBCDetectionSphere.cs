@@ -8,17 +8,15 @@ public class RBCDetectionSphere : MonoBehaviour {
 	void Start () {
 		
 		rbc = transform.parent.GetComponent<RBCScript>();
-		float v = Random.Range(1, 5);
+		float v = 2 * rbc.AntibodyCount() + 3;
 		Vector3 scale = new Vector3(v,v,v);
 		transform.localScale = scale;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 scale = transform.localScale;
-		
-		scale += new Vector3(0.5f,0.5f,0.5f) * Time.deltaTime;
-		
+		float v = 2 * rbc.AntibodyCount() + 3;
+		Vector3 scale = new Vector3(v,v,v);
 		transform.localScale = scale;
 	}
 	

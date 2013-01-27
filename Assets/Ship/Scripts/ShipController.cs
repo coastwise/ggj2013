@@ -34,7 +34,6 @@ public class ShipController : MonoBehaviour {
 	}
 
 	void Update () {
-		
 		currentState.Update();
 		
 	}
@@ -50,6 +49,8 @@ public class ShipController : MonoBehaviour {
 	}
 	
 	protected class FlyingState : State {
+		private bool canShoot = true;
+		
 		public FlyingState (ShipController c) : base (c) {}
 		override public void Update () {
 			if (Input.GetButton("Right Bumper")) {
@@ -61,12 +62,37 @@ public class ShipController : MonoBehaviour {
 				ship.EnterState(typeof(BarrelRollLeft));
 			}
 			
+			if (Input.GetButtonDown ("Jump")) {
+				TryShot ();
+			}
+			
 			ship.h = ship.h*ship.smoothing + Input.GetAxis("Horizontal")*(1-ship.smoothing);
 			ship.v = ship.v*ship.smoothing + Input.GetAxis("Vertical")*(1-ship.smoothing);
 			
 			ship.transform.localRotation = Quaternion.AngleAxis(ship.h*ship.maxHorizontalAngle, Vector3.up) * Quaternion.AngleAxis(ship.v*ship.maxVerticalAngle, Vector3.right);
 			
 			ship.transform.parent.Translate(ship.h*ship.horizontalSpeed, -ship.v*ship.verticalSpeed, 0);
+		}
+		
+		private void TryShot ()
+		{
+			if (canShoot)
+			{
+				ship.StartCoroutine(ShotDelayCoroutine());
+				
+				GameObject bullet = (GameObject)MonoBehaviour.Instantiate(Resources.Load("Bullet"));
+				bullet.transform.position = ship.transform.position;
+				
+				bullet.transform.rotation = ship.transform.rotation;
+				bullet.transform.parent = ship.transform.parent.parent;
+			}
+		}
+		
+		public IEnumerator ShotDelayCoroutine ()
+		{
+			canShoot = false;
+			yield return new WaitForSeconds (0.5f);
+			canShoot = true;
 		}
 	}
 	
