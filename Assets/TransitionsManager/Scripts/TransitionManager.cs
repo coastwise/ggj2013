@@ -167,7 +167,7 @@ public class TransitionManager : MonoBehaviour
         {
             ssBackground.guiTexture.texture = CustomSplashScreenBackgrounds[ssIndex];
             ssBackground.guiTexture.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-            ssBackground.guiTexture.pixelInset = new Rect(-CustomSplashScreenBackgrounds[ssIndex].width / 2, -CustomSplashScreenBackgrounds[ssIndex].height / 2, CustomSplashScreenBackgrounds[ssIndex].width, CustomSplashScreenBackgrounds[ssIndex].height);
+            ssBackground.guiTexture.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width, Screen.height);
         }
         else
         {
