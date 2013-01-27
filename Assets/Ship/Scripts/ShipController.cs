@@ -87,7 +87,7 @@ public class ShipController : MonoBehaviour {
 				TryShot ();
 			}
 			
-			if (Input.GetButtonDown ("Fire1")) {
+			if (Input.GetButtonDown ("Super")) {
 				TrySuper ();	
 			}
 			
