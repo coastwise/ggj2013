@@ -1,28 +1,18 @@
 fileFormatVersion: 2
-guid: 5c6cfa9c8734c414a9cdd05c3ab91355
+guid: 913b1dfe200ec4d62bdcb4bc5ef356c7
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: tubeRight1
+    100000: tubeStraight2
     100002: //RootNode
-    100004: tubeStraight1
-    100006: tubeStraight2
-    400000: tubeRight1
+    400000: tubeStraight2
     400002: //RootNode
-    400004: tubeStraight1
-    400006: tubeStraight2
-    2300000: tubeRight1
-    2300002: tubeStraight1
-    2300004: tubeStraight2
-    3300000: tubeRight1
-    3300002: tubeStraight1
-    3300004: tubeStraight2
-    4300000: tubeRight1
-    4300002: tubeStraight1
-    4300004: tubeStraight2
+    2300000: tubeStraight2
+    3300000: tubeStraight2
+    4300000: tubeStraight2
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -37,7 +27,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 2
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 0
@@ -49,7 +39,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
   tangentSpace:
-    normalSmoothAngle: 60
+    normalSmoothAngle: 180
     splitTangentsAcrossUV: 1
     normalImportMode: 1
     tangentImportMode: 1
