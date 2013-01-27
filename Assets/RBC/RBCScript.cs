@@ -9,12 +9,11 @@ public class RBCScript : MonoBehaviour {
 	private float mExplosionDuration;
 	private bool mShouldExplode;
 	private bool mIsInfected;
-	private bool mIsThreatDetected;
 	private bool mIsKilled;
 	
 	private float mHealth;
 	
-	private Vector3 randomIdlePoint;
+	private float randomIdleFactor;
 	private int mAntibodies;
 	
 	// Use this for initialization
@@ -124,56 +123,14 @@ public class RBCScript : MonoBehaviour {
 		// increase sphere collider size over time
 	}
 	
-	
-	public bool IsThreatDetected ()
-	{
-		return mIsThreatDetected;	
-	}
-	
-	
-	public void SetThreatDetected (bool val)
-	{
-		mIsThreatDetected = val;	
-	}
-	
-	public void FleeInit ()
-	{
-			
-	}
-	
-	public void Flee ()
-	{
-		// find nearest threat
-		
-		// run away from nearest threat
-	}
-	
 	public void IdleInit ()
 	{
-		StartCoroutine ("IdleRandomPositionCoroutine");	
-	}
-	
-	private IEnumerator IdleRandomPositionCoroutine ()
-	{
-		randomIdlePoint = transform.position;
-		
-		randomIdlePoint.x += Random.Range(-1, 1);
-		randomIdlePoint.y += Random.Range(-1, 1);
-		randomIdlePoint.z += Random.Range(-1, 1);
-		
-		yield return new WaitForSeconds(Random.Range(4.0f, 5.0f));
-		
-		StartCoroutine ("IdleRandomPositionCoroutine");
+		//todo
 	}
 	
 	public void Idle ()
 	{
-		Vector3 dir = randomIdlePoint - transform.position;
-		dir.Normalize();
-		
-		dir *= 0.4f;
-		
-		transform.Translate(dir * Time.deltaTime);
+		//todo
 	}
 	
 	public void ApplyDamage (float damage)
