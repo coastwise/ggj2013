@@ -70,6 +70,7 @@ public class ShipController : MonoBehaviour {
 	
 	protected class FlyingState : State {
 		private bool canShoot = true;
+		private bool canSuper = true;
 		
 		public FlyingState (ShipController c) : base (c) {}
 		override public void Update () {
@@ -84,6 +85,10 @@ public class ShipController : MonoBehaviour {
 			
 			if (Input.GetButton ("Shoot") || Input.GetAxisRaw("Right Trigger") > 0.5) {
 				TryShot ();
+			}
+			
+			if (Input.GetButtonDown ("Fire1")) {
+				TrySuper ();	
 			}
 			
 			ship.h = ship.h*ship.smoothing + Input.GetAxis("Horizontal")*(1-ship.smoothing);
@@ -115,27 +120,38 @@ public class ShipController : MonoBehaviour {
 				bullet.transform.rotation = ship.transform.rotation;
 				bullet.transform.parent = ship.transform.parent.parent;
 				
-				GameObject bullet2 = (GameObject)MonoBehaviour.Instantiate(Resources.Load("Bullet"));
-				bullet2.transform.position = ship.transform.position;
-				
-				bullet2.transform.rotation = ship.transform.rotation;
-				bullet2.transform.parent = ship.transform.parent.parent;
-				
-				bullet.transform.Translate(new Vector3(-0.3f, 0.15f, 0.2f));
-				bullet2.transform.Translate(new Vector3(0.3f, 0.15f, 0.2f));
+				bullet.transform.Translate(new Vector3(0f, 0.15f, 0.2f));
 				
 				bullet.transform.RotateAroundLocal(Vector3.right, -5f / 180 * Mathf.PI);
-				bullet2.transform.RotateAroundLocal(Vector3.right, -5f / 180 * Mathf.PI);
 				
 				AudioSource.PlayClipAtPoint((AudioClip)Resources.Load ("Shoot1"), new Vector3(0, 0, 0) , 1f);
+			}
+		}
+		
+		private void TrySuper ()
+		{
+			if (canSuper)
+			{
+				ship.StartCoroutine(SuperShotDelayCoroutine());
+				
+				GameObject sw = (GameObject)MonoBehaviour.Instantiate(Resources.Load("SuperWhy"), ship.transform.position + ship.transform.forward * 4.8f, ship.transform.rotation);
+				
+				sw.transform.parent = ship.transform;
 			}
 		}
 		
 		public IEnumerator ShotDelayCoroutine ()
 		{
 			canShoot = false;
-			yield return new WaitForSeconds (0.25f);
+			yield return new WaitForSeconds (0.15f);
 			canShoot = true;
+		}
+		
+		public IEnumerator SuperShotDelayCoroutine ()
+		{
+			canSuper = false;
+			yield return new WaitForSeconds (60f);
+			canSuper = true;
 		}
 	}
 	
