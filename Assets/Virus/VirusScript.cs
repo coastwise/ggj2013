@@ -33,12 +33,13 @@ public class VirusScript : MonoBehaviour {
 	}
 	 	
 	public void SetClosestTarget ()
-	{	
-		GameObject[] gos = GameObject.FindGameObjectsWithTag("RBC");
+	{
+		GameObject train = transform.parent.gameObject;
+		RBCScript[] rbcs = train.GetComponentsInChildren<RBCScript>();
+		
 		RBCList.Clear();
-		foreach (GameObject go in gos)
+		foreach (RBCScript rbc in rbcs)
 		{
-			RBCScript rbc = go.GetComponent<RBCScript>();
 			if (rbc.IsKilled() || rbc.IsInfected())
 				continue;
 		
