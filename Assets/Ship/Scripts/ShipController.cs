@@ -200,24 +200,27 @@ public class ShipController : MonoBehaviour {
 		
 		private VeinTrain trainToDelete;
 		
+		private float transitionTime = 2;
+		
 		override public void OnEnter () {
 			trainToDelete = ship.parentTrain;
 			ship.parentTrain = ship.parentTrain.nextTrain;
 			ship.parentTrain.GenerateNextTrain();
 			ship.transform.parent.parent = null;
+			ship.StartCoroutine(WaitAndSetParent());
 		}
 		
 		override public void Update () {
-			Vector3 dist = ship.transform.parent.position - ship.parentTrain.transform.position;
-			if (dist.magnitude < 0.5) {
-				iTween.Stop(ship.transform.parent.gameObject);
-				ship.EnterState(typeof(FlyingState));
-			} else {
-				iTween.MoveUpdate(ship.transform.parent.gameObject,
-				                  iTween.Hash("position", ship.parentTrain.transform,
-				                              "looktarget", ship.parentTrain.transform,
-				                              "time", 2));
-			}
+			iTween.MoveUpdate(ship.transform.parent.gameObject,
+			                  iTween.Hash("position", ship.parentTrain.transform,
+			                              "looktarget", ship.parentTrain.transform,
+			                              "time", transitionTime));
+		}
+		
+		IEnumerator WaitAndSetParent() {
+			yield return new WaitForSeconds(transitionTime);
+			iTween.Stop(ship.transform.parent.gameObject);
+			ship.EnterState(typeof(FlyingState));
 		}
 		
 		override public void OnExit () {
