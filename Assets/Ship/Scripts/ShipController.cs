@@ -158,7 +158,11 @@ public class ShipController : MonoBehaviour {
 	
 	protected class TrainTransition : State {
 		public TrainTransition (ShipController c) : base (c) {}
+		
+		private VeinTrain trainToDelete;
+		
 		override public void OnEnter () {
+			trainToDelete = ship.parentTrain;
 			ship.parentTrain = ship.parentTrain.nextTrain;
 			ship.parentTrain.GenerateNextTrain();
 			ship.transform.parent.parent = null;
@@ -172,7 +176,8 @@ public class ShipController : MonoBehaviour {
 			} else {
 				iTween.MoveUpdate(ship.transform.parent.gameObject,
 				                  iTween.Hash("position", ship.parentTrain.transform,
-				                              "looktarget", ship.parentTrain.transform));
+				                              "looktarget", ship.parentTrain.transform,
+				                              "time", 2));
 			}
 		}
 		
@@ -180,6 +185,10 @@ public class ShipController : MonoBehaviour {
 			ship.transform.parent.position = ship.parentTrain.transform.position;
 			ship.transform.parent.rotation = ship.parentTrain.transform.rotation;
 			ship.transform.parent.parent = ship.parentTrain.transform;
+			
+			Debug.Log("destroying " + trainToDelete.name);
+			GameObject.Destroy(trainToDelete.gameObject);
+			
 		}
 	}
 	
