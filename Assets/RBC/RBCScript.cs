@@ -15,6 +15,7 @@ public class RBCScript : MonoBehaviour {
 	private float mHealth;
 	
 	private float mMaxAntibody;
+	private Vector3 randomIdlePoint;
 	
 	// Use this for initialization
 	void Start () {
@@ -150,12 +151,30 @@ public class RBCScript : MonoBehaviour {
 	
 	public void IdleInit ()
 	{
-		// no-op
+		StartCoroutine ("IdleRandomPositionCoroutine");	
+	}
+	
+	private IEnumerator IdleRandomPositionCoroutine ()
+	{
+		randomIdlePoint = transform.position;
+		
+		randomIdlePoint.x += Random.Range(-1, 1);
+		randomIdlePoint.y += Random.Range(-1, 1);
+		randomIdlePoint.z += Random.Range(-1, 1);
+		
+		yield return new WaitForSeconds(Random.Range(4.0f, 5.0f));
+		
+		StartCoroutine ("IdleRandomPositionCoroutine");
 	}
 	
 	public void Idle ()
 	{
-		// no-op	
+		Vector3 dir = randomIdlePoint - transform.position;
+		dir.Normalize();
+		
+		dir *= 0.4f;
+		
+		transform.Translate(dir * Time.deltaTime);
 	}
 	
 	public void ApplyDamage (float damage)
