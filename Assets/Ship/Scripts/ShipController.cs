@@ -17,14 +17,28 @@ public class ShipController : MonoBehaviour {
 	private Dictionary<System.Type, State> states;
 	private State currentState;
 	
+	private VeinTrain parentTrain;
+	
 	void Awake () {
 		states = new Dictionary<System.Type, State> ();
 		states.Add(typeof(FlyingState), new FlyingState(this));
 		states.Add(typeof(BarrelRollLeft), new BarrelRollLeft(this));
 		states.Add(typeof(BarrelRollRight), new BarrelRollRight(this));
+		states.Add(typeof(TrainTransition), new TrainTransition(this));
 		
 		currentState = states[typeof(FlyingState)];
 		currentState.OnEnter();
+	}
+	
+	void Start () {
+		VeinTrain[] trains = GameObject.FindObjectsOfType(typeof(VeinTrain)) as VeinTrain[];
+		foreach (VeinTrain train in trains) {
+			// only one train should be tagged "Player" at a time... find it!
+			if (train.tag == "Player") {
+				parentTrain = train;
+				break;
+			}
+		}
 	}
 	
 	public void EnterState (System.Type newStateType) {
@@ -72,6 +86,15 @@ public class ShipController : MonoBehaviour {
 			ship.transform.localRotation = Quaternion.AngleAxis(ship.h*ship.maxHorizontalAngle, Vector3.up) * Quaternion.AngleAxis(ship.v*ship.maxVerticalAngle, Vector3.right);
 			
 			ship.transform.parent.Translate(ship.h*ship.horizontalSpeed, -ship.v*ship.verticalSpeed, 0);
+			
+			// this is (moderately) expensive, prolly shouldn't do it every frame!!! :/
+			VirusScript[] viruses = ship.parentTrain.GetComponentsInChildren<VirusScript>();
+			Debug.Log("Virus count: " + viruses.Length);
+			if (viruses.Length == 0) {
+				Debug.Log("All viruses killed!!!!");
+				ship.EnterState(typeof(TrainTransition));
+			}
+			
 		}
 		
 		private void TryShot ()
@@ -125,6 +148,13 @@ public class ShipController : MonoBehaviour {
 			Debug.Log("do a barrel roll!! (left)");
 			yield return new WaitForSeconds(1);
 			ship.EnterState(typeof(FlyingState));
+		}
+	}
+	
+	protected class TrainTransition : State {
+		public TrainTransition (ShipController c) : base (c) {}
+		override public void OnEnter () {
+			iTween.MoveBy(ship.gameObject, Vector3.forward * 100, 4);
 		}
 	}
 	
