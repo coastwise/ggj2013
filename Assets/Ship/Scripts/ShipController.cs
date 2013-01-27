@@ -82,7 +82,7 @@ public class ShipController : MonoBehaviour {
 				ship.EnterState(typeof(BarrelRollLeft));
 			}
 			
-			if (Input.GetButton ("Jump")) {
+			if (Input.GetButton ("Shoot") || Input.GetAxisRaw("Right Trigger") > 0.5) {
 				TryShot ();
 			}
 			
