@@ -44,11 +44,11 @@ public class WBCScript : MonoBehaviour {
 	{
 		randomIdlePoint = transform.position;
 		
-		randomIdlePoint.x += Random.Range(-5, 5);
-		randomIdlePoint.y += Random.Range(-5, 5);
-		randomIdlePoint.z += Random.Range(-5, 5);
+		randomIdlePoint.x += Random.Range(-3, 3);
+		randomIdlePoint.y += Random.Range(-3, 3);
+		randomIdlePoint.z += Random.Range(-3, 3);
 		
-		yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+		yield return new WaitForSeconds(Random.Range(3.0f, 4.0f));
 		
 		StartCoroutine ("IdleRandomPositionCoroutine");
 	}
@@ -58,7 +58,7 @@ public class WBCScript : MonoBehaviour {
 		Vector3 dir = randomIdlePoint - transform.position;
 		dir.Normalize();
 		
-		dir *= moveVel *0.5f;
+		dir *= moveVel *0.2f;
 		
 		transform.Translate(dir * Time.deltaTime);
 	}
