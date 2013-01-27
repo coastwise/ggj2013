@@ -8,12 +8,8 @@ public class VirusStateBirth : VirusState {
 	
 	public VirusStateBirth (VirusScript virus, Vector3 direction)
 		: base (virus) {
-		ShipController ship = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ShipController>();
 		
-		Vector3 dirToV = virus.transform.position - ship.transform.position;
-		dirToV.Normalize();
-		
-		dir = dirToV + direction;
+		dir = direction;
 		virus.StartCoroutine(EndBirthCoroutine());
 	}
 	

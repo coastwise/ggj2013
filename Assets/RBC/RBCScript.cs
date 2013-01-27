@@ -85,7 +85,7 @@ public class RBCScript : MonoBehaviour {
 	
 	public void Infected ()
 	{
-		if (Vector3.Distance(transform.position, ship.transform.position) > 2f && ship != null)
+		if (ship != null && Vector3.Distance(transform.position, ship.transform.position) > 2f)
 		{
 			Vector3 rbcPos = transform.position;
 			
