@@ -4,6 +4,7 @@ BLLib
 Trees:
 	Trees_WBC
 	Trees_RBC
+	Trees_TitleSequence
 	Unknown
 
 Contexts:
@@ -12,7 +13,7 @@ Contexts:
 Branch priority groups:
 	Unknown
 
-Actions (18: 1 - 19):
+Actions (25: 1 - 26):
 	Idle (1)
 	FreeTargets (2)
 	DamageOverTime (3)
@@ -31,9 +32,16 @@ Actions (18: 1 - 19):
 	IsKilled (16)
 	SetStateKill (17)
 	Kill (18)
-	Unknown (19)
+	ScreenOneVisualFlyIn (19)
+	ScreenOneTitleFlyIn (20)
+	ScreenTwoVisualOneFlyIn (21)
+	ScreenTwoTitleFlyIn (22)
+	MainTitleFadeVisual (23)
+	MainTitleFadeTitle (24)
+	AddOptions (25)
+	Unknown (26)
 
-Decorators (0: 20 - 20):
-	Unknown (20)
+Decorators (0: 27 - 27):
+	Unknown (27)
 
 Agent classes:

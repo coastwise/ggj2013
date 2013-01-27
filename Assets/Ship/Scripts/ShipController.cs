@@ -4,13 +4,17 @@ using System.Collections.Generic;
 
 public class ShipController : MonoBehaviour {
 	
-	public float maxHorizontalAngle = 40;
-	public float maxVerticalAngle = 40;
+	public float maxHorizontalAngle = 80;
+	public float maxVerticalAngle = 70;
+	public float maxRollAngle = 40;
 	public float horizontalSpeed = 0.1f;
 	public float verticalSpeed = 0.1f;
+	public float strafeSpeed = 0.1f;
 	
 	protected float h = 0;
 	protected float v = 0;
+	
+	protected float r = 0;
 	
 	public float smoothing = 0.93f;
 	
@@ -58,20 +62,34 @@ public class ShipController : MonoBehaviour {
 				ship.EnterState(typeof(BarrelRollRight));
 			}
 			if (Input.GetButton("Left Bumper")) {
+				
 				Debug.Log("Left Bumper");
 				ship.EnterState(typeof(BarrelRollLeft));
 			}
 			
-			if (Input.GetButton ("Jump")) {
+			
+			
+			if (Input.GetAxis ("Right Trigger") != 0) {
 				TryShot ();
 			}
 			
-			ship.h = ship.h*ship.smoothing + Input.GetAxis("Horizontal")*(1-ship.smoothing);
-			ship.v = ship.v*ship.smoothing + Input.GetAxis("Vertical")*(1-ship.smoothing);
+			
+			ship.h = ship.h*ship.smoothing + Input.GetAxis("Horizontal Right")*(1-ship.smoothing);
+			ship.v = ship.v*ship.smoothing - Input.GetAxis("Vertical Right")*(1-ship.smoothing);
 			
 			ship.transform.localRotation = Quaternion.AngleAxis(ship.h*ship.maxHorizontalAngle, Vector3.up) * Quaternion.AngleAxis(ship.v*ship.maxVerticalAngle, Vector3.right);
 			
-			ship.transform.parent.Translate(ship.h*ship.horizontalSpeed, -ship.v*ship.verticalSpeed, 0);
+			ship.transform.parent.parent.Translate(ship.h*ship.horizontalSpeed, -ship.v*ship.verticalSpeed, 0);
+			
+			Transform pivot = ship.transform.parent;
+			
+			ship.r = ship.r*ship.smoothing + Input.GetAxis("Horizontal")*(1-ship.smoothing);
+			
+			
+			
+			pivot.localRotation = Quaternion.AngleAxis(ship.r*ship.maxRollAngle, -Vector3.forward);
+			
+			pivot.parent.Translate(ship.r*ship.strafeSpeed, 0, 0);
 		}
 		
 		private void TryShot ()
@@ -92,8 +110,8 @@ public class ShipController : MonoBehaviour {
 				bullet2.transform.rotation = ship.transform.rotation;
 				bullet2.transform.parent = ship.transform.parent.parent;
 				
-				bullet.transform.Translate(new Vector3(-0.3f, 0.15f, 0.2f));
-				bullet2.transform.Translate(new Vector3(0.3f, 0.15f, 0.2f));
+				bullet.transform.Translate(new Vector3(-0.2f, 0.15f, 0.2f));
+				bullet2.transform.Translate(new Vector3(0.2f, 0.15f, 0.2f));
 				
 				bullet.transform.RotateAroundLocal(Vector3.right, -5f / 180 * Mathf.PI);
 				bullet2.transform.RotateAroundLocal(Vector3.right, -5f / 180 * Mathf.PI);
@@ -105,7 +123,7 @@ public class ShipController : MonoBehaviour {
 		public IEnumerator ShotDelayCoroutine ()
 		{
 			canShoot = false;
-			yield return new WaitForSeconds (0.25f);
+			yield return new WaitForSeconds (0.15f);
 			canShoot = true;
 		}
 	}
@@ -117,7 +135,7 @@ public class ShipController : MonoBehaviour {
 			iTween.RotateBy(ship.gameObject, Vector3.back, 1f);
 		}
 		override public void Update () {
-			ship.transform.parent.Translate(0.1f,0,0);
+			ship.transform.parent.parent.Translate(0.1f,0,0);
 		}
 		IEnumerator BarrelRoll() {
 			Debug.Log("do a barrel roll!! (right)");
@@ -133,7 +151,7 @@ public class ShipController : MonoBehaviour {
 			iTween.RotateBy(ship.gameObject, Vector3.forward, 1);
 		}
 		override public void Update () {
-			ship.transform.parent.Translate(-0.1f,0,0);
+			ship.transform.parent.parent.Translate(-0.1f,0,0);
 		}
 		IEnumerator BarrelRoll() {
 			Debug.Log("do a barrel roll!! (left)");
