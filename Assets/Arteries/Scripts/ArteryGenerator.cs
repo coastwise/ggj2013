@@ -9,6 +9,8 @@ public class ArteryGenerator : MonoBehaviour {
 	
 	private static Object[] prefabs;
 	
+	private bool doneGeneratingBranches = false;
+	
 	public List<Transform> branchRoots;
 	
 	public iTweenPath path;
@@ -33,6 +35,11 @@ public class ArteryGenerator : MonoBehaviour {
 	}
 	
 	public void GenerateBranches () {
+		if (doneGeneratingBranches) {
+			Debug.Log("someone attempted to generate " + name + "'s branches twice... ");
+			return;
+		}
+		
 		Debug.Log(name + " generating branches...");
 		foreach (Transform branchRoot in branchRoots) {
 			Object randomPrefab = prefabs[Random.Range(0, prefabs.Length)];
@@ -45,6 +52,8 @@ public class ArteryGenerator : MonoBehaviour {
 			// wait a few secs then destroy old artery
 			Destroy(prevArtery.transform.parent.gameObject, 10);
 		}
+		
+		doneGeneratingBranches = true;
 	}
 	
 }

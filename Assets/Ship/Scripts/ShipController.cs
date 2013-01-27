@@ -41,6 +41,7 @@ public class ShipController : MonoBehaviour {
 		}
 		
 		// initialize the next artery and next train
+		Debug.Log(name + " calling " + parentTrain.nextArtery.name + "'s GenerateBranches();");
 		parentTrain.nextArtery.GenerateBranches();
 		parentTrain.TransitionToNextArtery();
 		parentTrain.GenerateNextTrain();
@@ -185,6 +186,7 @@ public class ShipController : MonoBehaviour {
 			ship.transform.parent.position = ship.parentTrain.transform.position;
 			ship.transform.parent.rotation = ship.parentTrain.transform.rotation;
 			ship.transform.parent.parent = ship.parentTrain.transform;
+			ship.transform.parent.parent.tag = "Player";
 			
 			Debug.Log("destroying " + trainToDelete.name);
 			GameObject.Destroy(trainToDelete.gameObject);
