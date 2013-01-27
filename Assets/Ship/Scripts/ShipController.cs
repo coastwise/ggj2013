@@ -39,6 +39,11 @@ public class ShipController : MonoBehaviour {
 				break;
 			}
 		}
+		
+		// initialize the next artery and next train
+		parentTrain.nextArtery.GenerateBranches();
+		parentTrain.TransitionToNextArtery();
+		parentTrain.GenerateNextTrain();
 	}
 	
 	public void EnterState (System.Type newStateType) {
@@ -154,7 +159,16 @@ public class ShipController : MonoBehaviour {
 	protected class TrainTransition : State {
 		public TrainTransition (ShipController c) : base (c) {}
 		override public void OnEnter () {
-			iTween.MoveBy(ship.gameObject, Vector3.forward * 100, 4);
+			Debug.Log("Ship controller train transition; parent: " + ship.transform.parent.name + ", grandparent: " + ship.transform.parent.parent.name);
+			Debug.Log("ship controller next train pregen: " + ship.parentTrain.nextTrain.name);
+			ship.parentTrain.nextTrain.GenerateNextTrain();
+			Debug.Log("ship controller next train postgen: " + ship.parentTrain.nextTrain.name);
+			ship.transform.parent.position = ship.parentTrain.nextTrain.transform.position;
+			ship.transform.parent.rotation = ship.parentTrain.nextTrain.transform.rotation;
+			ship.transform.parent.parent = ship.parentTrain.nextTrain.transform;
+			ship.parentTrain = ship.parentTrain.nextTrain;
+			//ship.transform.parent.localRotation = Quaternion.identity;
+			ship.EnterState(typeof(FlyingState));
 		}
 	}
 	
