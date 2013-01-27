@@ -41,17 +41,17 @@ public class VeinTrain : MonoBehaviour {
 			//Debug.Log("TODO: put the veintrain colliders and stuff in layers... its still hitting other stuff!");
 			return;
 			
-		} else if (gameObject.tag != "Player") {
-			// only one instance of VeinTrain is authorized to call GenerateBranches()
-			// if we're not tagged "Player", it's not us
-			return;
-			
 		} else if (artery != nextArtery) { // we only want to do this once... sometimes it triggers more often
 			// we don't want to null this out by accident...
 			// so can't assign straight from GetComponent
 			nextArtery = artery;
-			Debug.Log(name + " calling " + nextArtery.name + "'s GenerateBranches");
-			nextArtery.GenerateBranches();
+			
+			if (gameObject.tag == "Player") {
+				// only one instance of VeinTrain is authorized to call GenerateBranches()
+				// if we're not tagged "Player", it's not us
+				Debug.Log(name + " calling " + nextArtery.name + "'s GenerateBranches");
+				nextArtery.GenerateBranches();
+			}
 		}
 	}
 	
