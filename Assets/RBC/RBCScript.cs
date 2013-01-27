@@ -14,15 +14,14 @@ public class RBCScript : MonoBehaviour {
 	
 	private float mHealth;
 	
-	private float mMaxAntibody;
+	private int mAntibodies;
 	
 	// Use this for initialization
 	void Start () {
 		mIsInfected = false;
-		mInfectionTime = 10f;
+		mInfectionTime = 100f;
 		mExplosionDuration = 3f;
 		mShouldExplode = false;
-		mMaxAntibody = 2;
 		mHealth = 1000;
 		
 		state = new RBCStateIdle(this);
@@ -162,5 +161,15 @@ public class RBCScript : MonoBehaviour {
 	{
 		mHealth -= damage;
 		mIsKilled = mHealth <= 0;	
+	}
+	
+	public void IncrementAB ()
+	{
+		mAntibodies++;
+	}
+	
+	public int AntibodyCount ()
+	{
+		return mAntibodies;	
 	}
 }
