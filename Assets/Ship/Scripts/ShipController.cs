@@ -143,10 +143,14 @@ public class ShipController : MonoBehaviour {
 		public BarrelRollRight (ShipController c) : base (c) {}
 		override public void OnEnter () {
 			ship.StartCoroutine(BarrelRoll());
-			iTween.RotateBy(ship.gameObject, Vector3.back, 1f);
-		}
-		override public void Update () {
-			ship.transform.parent.Translate(0.1f,0,0);
+			iTween.RotateBy(ship.gameObject, 
+			                iTween.Hash("amount", Vector3.back,
+			                            "easetype", iTween.EaseType.easeOutQuint,
+			                            "timeme", 1));
+			iTween.MoveBy(ship.transform.parent.gameObject, 
+			              iTween.Hash("amount", Vector3.right*4,
+			                          "easetype", iTween.EaseType.easeInOutQuad,
+			                          "time", 1));
 		}
 		IEnumerator BarrelRoll() {
 			Debug.Log("do a barrel roll!! (right)");
@@ -159,10 +163,14 @@ public class ShipController : MonoBehaviour {
 		public BarrelRollLeft (ShipController c) : base (c) {}
 		override public void OnEnter () {
 			ship.StartCoroutine(BarrelRoll());
-			iTween.RotateBy(ship.gameObject, Vector3.forward, 1);
-		}
-		override public void Update () {
-			ship.transform.parent.Translate(-0.1f,0,0);
+			iTween.RotateBy(ship.gameObject, 
+			                iTween.Hash("amount", Vector3.forward,
+			                            "easetype", iTween.EaseType.easeOutQuint,
+			                            "timeme", 1));
+			iTween.MoveBy(ship.transform.parent.gameObject, 
+			              iTween.Hash("amount", Vector3.left*4,
+			                          "easetype", iTween.EaseType.easeInOutQuad,
+			                          "time", 1));
 		}
 		IEnumerator BarrelRoll() {
 			Debug.Log("do a barrel roll!! (left)");
