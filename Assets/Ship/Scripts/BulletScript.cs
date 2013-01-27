@@ -32,8 +32,17 @@ public class BulletScript : MonoBehaviour {
 			
 			collided = true;
 			transform.parent = rbc.transform;
-			rbc.IncrementAB();
+			rbc.IncrementAB();	
+		} else if (other.tag == "Virus")
+		{
+			VirusScript virus = other.GetComponent<VirusScript>();
 			
+			if (!virus.IsAttached())
+			{
+				collided = true;
+				transform.parent = virus.transform;
+				virus.IncrementAB();
+			}
 		}
 	}
 }
