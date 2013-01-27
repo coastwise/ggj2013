@@ -104,4 +104,20 @@ public class RBCAIScript : MonoBehaviour, IAgent {
 	{
 		return BehaveResult.Running;
 	}
+	
+	public BehaveResult TickSetStateIdleAction (Tree sender)
+	{
+		rbc.SetState(new RBCStateIdle(rbc));
+		return BehaveResult.Success;
+	}
+	
+	public BehaveResult TickIdleAction (Tree sender)
+	{
+		if (rbc.IsInfected() || rbc.IsKilled())
+		{
+			return BehaveResult.Success;	
+		}
+		
+		return BehaveResult.Running;
+	}
 }

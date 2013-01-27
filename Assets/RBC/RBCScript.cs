@@ -9,7 +9,6 @@ public class RBCScript : MonoBehaviour {
 	private float mExplosionDuration;
 	private bool mShouldExplode;
 	private bool mIsInfected;
-	private bool mIsThreatDetected;
 	private bool mIsKilled;
 	
 	private float mHealth;
@@ -148,38 +147,14 @@ public class RBCScript : MonoBehaviour {
 		// increase sphere collider size over time
 	}
 	
-	
-	public bool IsThreatDetected ()
-	{
-		return mIsThreatDetected;	
-	}
-	
-	
-	public void SetThreatDetected (bool val)
-	{
-		mIsThreatDetected = val;	
-	}
-	
-	public void FleeInit ()
-	{
-			
-	}
-	
-	public void Flee ()
-	{
-		// find nearest threat
-		
-		// run away from nearest threat
-	}
-	
 	public void IdleInit ()
 	{
-		// no-op
+		//todo
 	}
 	
 	public void Idle ()
 	{
-		// no-op	
+		//todo
 	}
 	
 	public void ApplyDamage (float damage)
