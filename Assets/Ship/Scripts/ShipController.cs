@@ -74,6 +74,9 @@ public class ShipController : MonoBehaviour {
 		
 		public FlyingState (ShipController c) : base (c) {}
 		override public void Update () {
+			
+			if (Time.timeScale == 0) return;
+			
 			if (Input.GetButton("Right Bumper")) {
 				Debug.Log("Right Bumper");
 				ship.EnterState(typeof(BarrelRollRight));
