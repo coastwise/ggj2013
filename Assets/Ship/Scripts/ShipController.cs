@@ -124,7 +124,7 @@ public class ShipController : MonoBehaviour {
 				
 				bullet.transform.RotateAroundLocal(Vector3.right, -5f / 180 * Mathf.PI);
 				
-				AudioSource.PlayClipAtPoint((AudioClip)Resources.Load ("Shoot1"), new Vector3(0, 0, 0) , 1f);
+				AudioSource.PlayClipAtPoint((AudioClip)Resources.Load ("Shoot1"), new Vector3(0, 0, 0) , 0.2f);
 			}
 		}
 		
