@@ -43,7 +43,8 @@ public class ArteryGenerator : MonoBehaviour {
 		Debug.Log(name + " generating branches...");
 		foreach (Transform branchRoot in branchRoots) {
 			Object randomPrefab = prefabs[Random.Range(0, prefabs.Length)];
-			GameObject branch = Instantiate(randomPrefab, branchRoot.position, branchRoot.rotation) as GameObject;
+			Quaternion branchRotation = branchRoot.rotation * Quaternion.AngleAxis(Random.value * 360, Vector3.forward);
+			GameObject branch = Instantiate(randomPrefab, branchRoot.position, branchRotation) as GameObject;
 			ArteryGenerator artery = branch.GetComponentInChildren<ArteryGenerator>();
 			artery.prevArtery = this;
 		}
